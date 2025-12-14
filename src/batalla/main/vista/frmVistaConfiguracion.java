@@ -8,6 +8,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import java.util.Random;
+import batalla.main.vista.frmBatalla;
 /**
  *
  * @author gaspi
@@ -15,16 +16,11 @@ import java.util.Random;
 public class frmVistaConfiguracion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmVistaConfiguracion.class.getName());
-
-    /**
-     * Creates new form frmVistaConfiguracion
-     */
         private Random random = new Random();
     controladorConfiguracion controlador = new controladorConfiguracion();
     public frmVistaConfiguracion() {
        initComponents();
     
-
     this.setSize(700, 500);
     this.setResizable(false);
     this.setLocationRelativeTo(null);
@@ -326,8 +322,6 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         actualizarListaPersonajes();
         
         txtApodo.setText("");
-        
-
         numVida.setValue(random.nextInt(61) + 100);
         numFuerza.setValue(random.nextInt(11) + 15);
         numDefensa.setValue(random.nextInt(6) + 8);
@@ -339,7 +333,6 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         } else {
             cbTipoPersonaje.setSelectedItem("Heroe");
         }
-        
     } catch (IllegalArgumentException e) {
         JOptionPane.showMessageDialog(
             this,
@@ -358,15 +351,12 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarPersonajeActionPerformed
 private void actualizarListaPersonajes() {
       DefaultListModel<String> modelo = new DefaultListModel<>();
-    
     if (controlador.tieneHeroe()) {
         modelo.addElement("Heroe: " + controlador.getHeroe().getApodo());
     }
-    
     if (controlador.tieneVillano()) {
         modelo.addElement("Villano: " + controlador.getVillano().getApodo());
     }
-    
     lsPersonajes.setModel(modelo);
 }
     private void btnEliminarPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPersonajeActionPerformed
@@ -374,7 +364,7 @@ private void actualizarListaPersonajes() {
     if (seleccionado == null) {
         JOptionPane.showMessageDialog(
             this,
-            "Seleccioná un personaje para poder eliminarlo.",
+            "Seleccioná un personaje para poder eliminarlo",
             "Aviso",
             JOptionPane.WARNING_MESSAGE
         );
@@ -383,7 +373,7 @@ private void actualizarListaPersonajes() {
     
     int opcion = JOptionPane.showConfirmDialog(
         this,
-        "¿Seguro que queres eliminar este personaje?",
+        "¿Estas Seguro que queres eliminar este personaje?",
         "Confirmar eliminación",
         JOptionPane.YES_NO_OPTION
     );
@@ -413,7 +403,7 @@ private void actualizarListaPersonajes() {
         if (!controlador.personajesCompletos()) {
             JOptionPane.showMessageDialog(
                 this,
-                "Tenes que crear un Heroe y un Villano antes de iniciar la batalla",
+                "Debés crear un Heroe y un Villano antes de iniciar la batalla.",
                 "Aviso",
                 JOptionPane.WARNING_MESSAGE
             );
@@ -423,13 +413,15 @@ private void actualizarListaPersonajes() {
         int cantidadBatallas = Integer.parseInt((String) cbCantidadBatallas.getSelectedItem());
         controlador.iniciarBatalla(cantidadBatallas);
         
-
-        JOptionPane.showMessageDialog(
-            this,
-            "Batalla iniciada",
-            "Información",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        // Ocultar ventana de configuración
+        this.setVisible(false);
+        
+        // Abrir ventana de batalla
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            batalla.main.vista.frmBatalla ventanaBatalla = new batalla.main.vista.frmBatalla();
+            ventanaBatalla.setVisible(true);
+            ventanaBatalla.setLocationRelativeTo(null);
+        });
         
     } catch (Exception e) {
         JOptionPane.showMessageDialog(
@@ -442,14 +434,12 @@ private void actualizarListaPersonajes() {
     }//GEN-LAST:event_btnIniciarBatallaActionPerformed
 
     private void cbCantidadBatallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCantidadBatallasActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_cbCantidadBatallasActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed
     try {
         controlador.cargarPartida();
-        
-        // TODO: En etapas futuras, aquí se cargará desde archivo
         JOptionPane.showMessageDialog(
             this,
             "",
@@ -482,11 +472,11 @@ private void actualizarListaPersonajes() {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cbTipoPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoPersonajeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_cbTipoPersonajeActionPerformed
 
     private void txtApodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApodoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtApodoActionPerformed
 
     /**

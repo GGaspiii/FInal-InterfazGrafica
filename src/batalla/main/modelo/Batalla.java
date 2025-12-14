@@ -18,7 +18,7 @@ public class Batalla {
     
      public Batalla(Heroe heroe, Villano villano) {
         if (heroe == null || villano == null) {
-            throw new IllegalArgumentException("El Heroe y el Villano no pueden ser null.");
+            throw new IllegalArgumentException("El Heroe y el Villano no pueden no tener nada");
         }
         this.heroe = heroe;
         this.villano = villano;
@@ -33,10 +33,6 @@ public class Batalla {
         this.ganador = null;
     }
     
-    /**
-     * Ejecuta un turno completo de la batalla
-     * @return String con el resultado del turno
-     */
     public String ejecutarTurno() {
         if (terminada) {
             return "La batalla ya terminó. Ganador: " + ganador.getApodo();
@@ -46,7 +42,7 @@ public class Batalla {
         
 
         if (turnoActual % 2 == 1) {
-            // Turno del Heroe
+
             resultado = ejecutarAtaque(heroe, villano, "Heroe");
         } else {
 
@@ -85,7 +81,6 @@ public class Batalla {
         if (dañoBase < 1) {
             dañoBase = 1;
         }
-        
         return dañoBase;
     }
 
@@ -96,7 +91,6 @@ public class Batalla {
         if (!estaTerminada()) {
             return null;
         }
-        
         if (heroe.estaVivo()) {
             return heroe;
         } else {
@@ -106,7 +100,7 @@ public class Batalla {
     
     public String obtenerEstado() {
         StringBuilder estado = new StringBuilder();
-        estado.append("=== Estado de la Batalla ===\n");
+        estado.append("Estado de la Batalla\n");
         estado.append("Turno: ").append(turnoActual).append("\n");
         estado.append("\nHeroe: ").append(heroe.getApodo()).append("\n");
         estado.append("  Vida: ").append(heroe.getVida()).append("\n");
