@@ -20,6 +20,6 @@ public class Heroe extends Personaje {
     
     @Override
     public String getTipo() {
-        return "Héroe";
+        return "Heroe"; 
     }
 }

@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package batalla.main.vista;
-import javax.swing.SpinnerNumberModel;
 import batalla.main.controlador.controladorConfiguracion;
-import java.util.Random;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import java.util.Random;
 /**
  *
  * @author gaspi
@@ -18,24 +19,28 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
     /**
      * Creates new form frmVistaConfiguracion
      */
+        private Random random = new Random();
     controladorConfiguracion controlador = new controladorConfiguracion();
     public frmVistaConfiguracion() {
-        initComponents();
-        this.setSize(650, 400);
-        this.setResizable(false);
-         numVida.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        numFuerza.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        numDefensa.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        numBendicion.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        
-        Random random = new Random();
-        numVida.setValue(random.nextInt(100, 161));
-        numFuerza.setValue(random.nextInt(15, 26));
-        numDefensa.setValue(random.nextInt(8, 14));
-        numBendicion.setValue(random.nextInt(30, 100));
-        
-        
-       
+       initComponents();
+    
+
+    this.setSize(700, 500);
+    this.setResizable(false);
+    this.setLocationRelativeTo(null);
+    
+
+    controlador = new controladorConfiguracion();
+    numVida.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+    numFuerza.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+    numDefensa.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+    numBendicion.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+    numVida.setValue(random.nextInt(61) + 100);
+    numFuerza.setValue(random.nextInt(11) + 15);
+    numDefensa.setValue(random.nextInt(6) + 8);
+    numBendicion.setValue(random.nextInt(70) + 30);
+   
+    lsPersonajes.setModel(new DefaultListModel<>());
     }
 
     /**
@@ -68,15 +73,15 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         chbActivarAtaqueSupremo = new javax.swing.JCheckBox();
         lblCantidadDeBatallas1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lsPersonajes = new javax.swing.JList<>();
-        jLabel8 = new javax.swing.JLabel();
         btnIniciarBatalla = new javax.swing.JButton();
         btnCargarPartida = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Configuracion");
+        setTitle("Configuracion Inicial");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -84,19 +89,22 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(null));
 
-        jLabel2.setText("Apodo");
+        jLabel2.setText("Apodo :");
 
-        jLabel3.setText("Tipo de Personaje");
+        jLabel3.setText("Tipo de Personaje :");
 
-        jLabel4.setText("Vida");
+        jLabel4.setText("Vida :");
 
-        jLabel5.setText("Fuerza");
+        jLabel5.setText("Fuerza :");
 
-        jLabel6.setText("Defensa");
+        jLabel6.setText("Defensa :");
 
-        jLabel7.setText("Bendicion");
+        jLabel7.setText("Bendicion :");
+
+        txtApodo.addActionListener(this::txtApodoActionPerformed);
 
         cbTipoPersonaje.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Heroe ", "Villano", " " }));
+        cbTipoPersonaje.addActionListener(this::cbTipoPersonajeActionPerformed);
 
         btnAgregarPersonaje.setLabel("Agregar Personaje");
         btnAgregarPersonaje.addActionListener(this::btnAgregarPersonajeActionPerformed);
@@ -104,9 +112,9 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         btnEliminarPersonaje.setLabel("Eliminar Personaje");
         btnEliminarPersonaje.addActionListener(this::btnEliminarPersonajeActionPerformed);
 
-        lblCantidadDeBatallas.setText("Cantidad De Batallas");
+        lblCantidadDeBatallas.setText("Cantidad De Batallas :");
 
-        cbCantidadBatallas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3", "5" }));
+        cbCantidadBatallas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
         cbCantidadBatallas.addActionListener(this::cbCantidadBatallasActionPerformed);
 
         lblCantidadDeBatallas1.setText("Activar Ataque Supremo");
@@ -116,83 +124,89 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAgregarPersonaje)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarPersonaje)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(numDefensa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(numBendicion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(numVida, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(numDefensa)
-                                    .addComponent(numFuerza)
-                                    .addComponent(txtApodo, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbTipoPersonaje, javax.swing.GroupLayout.Alignment.LEADING, 0, 86, Short.MAX_VALUE)
-                                    .addComponent(numBendicion, javax.swing.GroupLayout.Alignment.LEADING)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(numVida, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3))
+                                .addComponent(jLabel2))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblCantidadDeBatallas)
-                                    .addComponent(lblCantidadDeBatallas1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbCantidadBatallas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(chbActivarAtaqueSupremo)
-                                        .addGap(35, 35, 35)))))
-                        .addGap(47, 47, 47))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(numFuerza, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbTipoPersonaje, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCantidadDeBatallas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbCantidadBatallas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCantidadDeBatallas1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chbActivarAtaqueSupremo)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(btnAgregarPersonaje)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminarPersonaje)
+                .addGap(48, 48, 48))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtApodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cbTipoPersonaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(numVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(numVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(numFuerza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(numDefensa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(numDefensa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(numBendicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbCantidadBatallas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCantidadDeBatallas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chbActivarAtaqueSupremo)
-                    .addComponent(lblCantidadDeBatallas1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarPersonaje)
-                    .addComponent(btnEliminarPersonaje))
-                .addContainerGap())
+                    .addComponent(lblCantidadDeBatallas)
+                    .addComponent(cbCantidadBatallas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCantidadDeBatallas1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAgregarPersonaje)
+                            .addComponent(btnEliminarPersonaje)))
+                    .addComponent(chbActivarAtaqueSupremo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel2.getAccessibleContext().setAccessibleName("lblApodo");
@@ -212,26 +226,21 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(null));
 
-        lsPersonajes.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jLabel8.setText("Personajes");
+
         jScrollPane2.setViewportView(lsPersonajes);
         lsPersonajes.getAccessibleContext().setAccessibleName("lsPersonajes");
-
-        jLabel8.setText("Personajes");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(157, 157, 157)
                 .addComponent(jLabel8)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -240,16 +249,21 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnIniciarBatalla.setForeground(new java.awt.Color(0, 204, 51));
+        btnIniciarBatalla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/batalla/main/vista/iconos/video.png"))); // NOI18N
         btnIniciarBatalla.setText("Iniciar Batalla");
         btnIniciarBatalla.addActionListener(this::btnIniciarBatallaActionPerformed);
 
+        btnCargarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/batalla/main/vista/iconos/reload.png"))); // NOI18N
         btnCargarPartida.setText("Cargar Partida");
         btnCargarPartida.addActionListener(this::btnCargarPartidaActionPerformed);
 
+        btnSalir.setForeground(new java.awt.Color(255, 51, 51));
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/batalla/main/vista/iconos/logout.png"))); // NOI18N
         btnSalir.setLabel("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
 
@@ -258,45 +272,36 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btnCargarPartida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnIniciarBatalla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(21, 21, 21))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnSalir)
-                                .addGap(40, 40, 40))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnIniciarBatalla)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCargarPartida)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnIniciarBatalla)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCargarPartida)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSalir)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIniciarBatalla)
+                    .addComponent(btnCargarPartida)
+                    .addComponent(btnSalir))
                 .addContainerGap())
         );
 
@@ -308,35 +313,132 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPersonajeActionPerformed
-String apodo = txtApodo.getText();
-    String tipo = (String) cbTipoPersonaje.getSelectedItem();
-    controlador.agregarPersonaje(apodo, tipo, 
-        ((Number) numVida.getValue()).intValue(),
-        ((Number) numFuerza.getValue()).intValue(),
-        ((Number) numDefensa.getValue()).intValue(),
-        ((Number) numBendicion.getValue()).intValue());
-    txtApodo.setText("");
-    
-    // Actualizar la lista de personajes
-    actualizarListaPersonajes();
-}
+ try {
+        String apodo = txtApodo.getText();
+        String tipo = (String) cbTipoPersonaje.getSelectedItem();
+        int vida = ((Number) numVida.getValue()).intValue();
+        int fuerza = ((Number) numFuerza.getValue()).intValue();
+        int defensa = ((Number) numDefensa.getValue()).intValue();
+        int bendicion = ((Number) numBendicion.getValue()).intValue();
+        
+        controlador.agregarPersonaje(apodo, tipo, vida, fuerza, defensa, bendicion);
+        
+        actualizarListaPersonajes();
+        
+        txtApodo.setText("");
+        
 
-// Método para actualizar la lista
-private void actualizarListaPersonajes() {
-    javax.swing.DefaultListModel<String> modelo = new javax.swing.DefaultListModel<>();
-    // Por ahora vacío, se completará en la siguiente etapa
-    // modelo.addElement("Héroe: " + apodo);
-    // modelo.addElement("Villano: " + apodo);
-    lsPersonajes.setModel(modelo);
+        numVida.setValue(random.nextInt(61) + 100);
+        numFuerza.setValue(random.nextInt(11) + 15);
+        numDefensa.setValue(random.nextInt(6) + 8);
+        numBendicion.setValue(random.nextInt(70) + 30);
+        
+
+        if (cbTipoPersonaje.getSelectedItem().equals("Heroe")) {
+            cbTipoPersonaje.setSelectedItem("Villano");
+        } else {
+            cbTipoPersonaje.setSelectedItem("Heroe");
+        }
+        
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error: " + e.getMessage(),
+            "Error de validación",
+            JOptionPane.ERROR_MESSAGE
+        );
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error inesperado: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
     }//GEN-LAST:event_btnAgregarPersonajeActionPerformed
-
+private void actualizarListaPersonajes() {
+      DefaultListModel<String> modelo = new DefaultListModel<>();
+    
+    if (controlador.tieneHeroe()) {
+        modelo.addElement("Heroe: " + controlador.getHeroe().getApodo());
+    }
+    
+    if (controlador.tieneVillano()) {
+        modelo.addElement("Villano: " + controlador.getVillano().getApodo());
+    }
+    
+    lsPersonajes.setModel(modelo);
+}
     private void btnEliminarPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPersonajeActionPerformed
-        controlador.eliminarPersonaje(0);        // TODO add your handling code here:
+    String seleccionado = lsPersonajes.getSelectedValue();
+    if (seleccionado == null) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Seleccioná un personaje para poder eliminarlo.",
+            "Aviso",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+    
+    int opcion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Seguro que queres eliminar este personaje?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION
+    );
+    if (opcion == JOptionPane.YES_OPTION) {
+        try {
+            if (seleccionado.contains("Heroe")) {
+                controlador.eliminarPersonaje("Heroe");
+            } else if (seleccionado.contains("Villano")) {
+                controlador.eliminarPersonaje("Villano");
+            }
+            
+            actualizarListaPersonajes();
+            
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Error: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    } 
     }//GEN-LAST:event_btnEliminarPersonajeActionPerformed
 
     private void btnIniciarBatallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarBatallaActionPerformed
+       try {
+        if (!controlador.personajesCompletos()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Tenes que crear un Heroe y un Villano antes de iniciar la batalla",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
         int cantidadBatallas = Integer.parseInt((String) cbCantidadBatallas.getSelectedItem());
-        controlador.iniciarBatalla(cantidadBatallas);        // TODO add your handling code here:
+        controlador.iniciarBatalla(cantidadBatallas);
+        
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Batalla iniciada",
+            "Información",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
     }//GEN-LAST:event_btnIniciarBatallaActionPerformed
 
     private void cbCantidadBatallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCantidadBatallasActionPerformed
@@ -344,21 +446,48 @@ private void actualizarListaPersonajes() {
     }//GEN-LAST:event_cbCantidadBatallasActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed
-        controlador.cargarPartida();        // TODO add your handling code here:
+    try {
+        controlador.cargarPartida();
+        
+        // TODO: En etapas futuras, aquí se cargará desde archivo
+        JOptionPane.showMessageDialog(
+            this,
+            "",
+            "Información",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
     }//GEN-LAST:event_btnCargarPartidaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        controlador.salir();
-    int opcion = JOptionPane.showConfirmDialog( this,
-    "¿Está seguro que desea salir?",
-    "Confirmar salida",
-    JOptionPane.YES_NO_OPTION,
-    JOptionPane.QUESTION_MESSAGE
+    int opcion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Estas seguro que queres salir?",
+        "Confirmar salida",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
     );
     if (opcion == JOptionPane.YES_OPTION) {
-    System.exit(0);
-    }        // TODO add your handling code here:
+        controlador.salir();
+        System.exit(0);
+    }
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cbTipoPersonajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoPersonajeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoPersonajeActionPerformed
+
+    private void txtApodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApodoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApodoActionPerformed
 
     /**
      * @param args the command line arguments
