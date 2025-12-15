@@ -8,11 +8,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import java.util.Random;
-import batalla.main.vista.frmBatalla;
-/**
- *
- * @author gaspi
- */
+import batalla.main.modelo.Personaje;
+import batalla.main.controlador.controladorBatalla;
+import java.sql.SQLException;
+import batalla.main.modelo.Heroe;
+import batalla.main.modelo.Villano;
+
 public class frmVistaConfiguracion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmVistaConfiguracion.class.getName());
@@ -328,7 +329,8 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         numBendicion.setValue(random.nextInt(70) + 30);
         
 
-        if (cbTipoPersonaje.getSelectedItem().equals("Heroe")) {
+        String tipoSeleccionado = (String) cbTipoPersonaje.getSelectedItem();
+        if (tipoSeleccionado.equals("Heroe")) {
             cbTipoPersonaje.setSelectedItem("Villano");
         } else {
             cbTipoPersonaje.setSelectedItem("Heroe");
@@ -399,7 +401,7 @@ private void actualizarListaPersonajes() {
     }//GEN-LAST:event_btnEliminarPersonajeActionPerformed
 
     private void btnIniciarBatallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarBatallaActionPerformed
-       try {
+        try {
         if (!controlador.personajesCompletos()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -413,12 +415,13 @@ private void actualizarListaPersonajes() {
         int cantidadBatallas = Integer.parseInt((String) cbCantidadBatallas.getSelectedItem());
         controlador.iniciarBatalla(cantidadBatallas);
         
-        // Ocultar ventana de configuración
+        Heroe heroe = controlador.getHeroe();
+        Villano villano = controlador.getVillano();
+        
         this.setVisible(false);
         
-        // Abrir ventana de batalla
         javax.swing.SwingUtilities.invokeLater(() -> {
-            batalla.main.vista.frmBatalla ventanaBatalla = new batalla.main.vista.frmBatalla();
+            frmBatalla ventanaBatalla = new frmBatalla(heroe, villano, cantidadBatallas);
             ventanaBatalla.setVisible(true);
             ventanaBatalla.setLocationRelativeTo(null);
         });
@@ -438,22 +441,63 @@ private void actualizarListaPersonajes() {
     }//GEN-LAST:event_cbCantidadBatallasActionPerformed
 
     private void btnCargarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarPartidaActionPerformed
-    try {
-        controlador.cargarPartida();
-        JOptionPane.showMessageDialog(
+  try {
+        Personaje[] personajes = controladorBatalla.cargarPartidaBD();
+        
+        if (personajes == null || personajes.length < 2) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No hay partidas guardadas en la base de datos.",
+                "Información",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+        
+        // Convertir Personaje[] a Heroe y Villano
+        Heroe heroe = (Heroe) personajes[0];
+        Villano villano = (Villano) personajes[1];
+        
+        controlador.eliminarPersonaje("Heroe");
+        controlador.eliminarPersonaje("Villano");
+        
+        controlador.agregarPersonaje(heroe.getApodo(), "Heroe", heroe.getVida(), heroe.getFuerza(), heroe.getDefensa(), heroe.getBendicion());
+        controlador.agregarPersonaje(villano.getApodo(), "Villano", villano.getVida(), villano.getFuerza(), villano.getDefensa(), villano.getBendicion());
+        
+        actualizarListaPersonajes();
+        int opcion = JOptionPane.showConfirmDialog(
             this,
-            "",
-            "Información",
-            JOptionPane.INFORMATION_MESSAGE
+            "Partida cargada exitosamente.\n¿Querés continuar la batalla?",
+            "Partida Cargada",
+            JOptionPane.YES_NO_OPTION
         );
         
-    } catch (Exception e) {
+        if (opcion == JOptionPane.YES_OPTION) {
+            this.setVisible(false);
+            
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                frmBatalla ventanaBatalla = new frmBatalla(heroe, villano);
+                ventanaBatalla.setVisible(true);
+                ventanaBatalla.setLocationRelativeTo(null);
+            });
+        }
+        
+    } catch (SQLException e) {
         JOptionPane.showMessageDialog(
             this,
-            "Error: " + e.getMessage(),
+            "Error al cargar la partida: " + e.getMessage(),
             "Error",
             JOptionPane.ERROR_MESSAGE
         );
+        e.printStackTrace();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error inesperado: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+        e.printStackTrace();
     }
     }//GEN-LAST:event_btnCargarPartidaActionPerformed
 

@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package batalla.main.modelo;
 
-/**
- *
- * @author gaspi
- */
 public abstract class Personaje {
     
     protected String apodo;
@@ -41,11 +33,11 @@ public abstract class Personaje {
     
     public String validarApodo(String apodo) {
         if (apodo == null || apodo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El apodo no puede estar vacío.");
+            throw new IllegalArgumentException("El apodo no puede estar vacío");
         }
         apodo = apodo.trim();
         if (!apodo.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-            throw new IllegalArgumentException("El apodo puede contener letras y espacios unicamente");
+            throw new IllegalArgumentException("El apodo tiene contener letras y espacios unicamente");
         }
         if (apodo.length() < 3 || apodo.length() > 10) {
             throw new IllegalArgumentException("El apodo debe tener entre 3 y 10 caracteres");
@@ -83,11 +75,8 @@ public abstract class Personaje {
     public void curarse(int curacion) {
         this.vida += curacion;
     }
-    public void recibirDano(int dano) {
-        this.vida -= dano;
-        if (this.vida < 0) {
-            this.vida = 0;
-        }
+    public void recibirDaño(int daño) {
+        this.vida = Math.max(0, this.vida - daño);
     }
     public void incrementarDefensa(int incremento) {
         this.defensa += incremento;

@@ -1,14 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package batalla.main.modelo;
 
-
-/**
- *
- * @author gaspi
- */
 public class Batalla {
     private Heroe heroe;
     private Villano villano;
@@ -16,10 +7,7 @@ public class Batalla {
     private boolean terminada;
     private Personaje ganador;
     
-     public Batalla(Heroe heroe, Villano villano) {
-        if (heroe == null || villano == null) {
-            throw new IllegalArgumentException("El Heroe y el Villano no pueden no tener nada");
-        }
+    public Batalla(Heroe heroe, Villano villano) {
         this.heroe = heroe;
         this.villano = villano;
         this.turnoActual = 0;
@@ -35,90 +23,74 @@ public class Batalla {
     
     public String ejecutarTurno() {
         if (terminada) {
-            return "La batalla ya terminó. Ganador: " + ganador.getApodo();
+            return "La batalla ya terminó, Ganador: " + ganador.getApodo();
         }
         
-        String resultado = "";
+        String resultado = (turnoActual % 2 == 1) 
+            ? ejecutarAtaque(heroe, villano, "Heroe")
+            : ejecutarAtaque(villano, heroe, "Villano");
         
-
-        if (turnoActual % 2 == 1) {
-
-            resultado = ejecutarAtaque(heroe, villano, "Heroe");
-        } else {
-
-            resultado = ejecutarAtaque(villano, heroe, "Villano");
-        }
-        
-
         if (!heroe.estaVivo() || !villano.estaVivo()) {
             terminada = true;
-            if (heroe.estaVivo()) {
-                ganador = heroe;
-            } else {
-                ganador = villano;
-            }
-            resultado += "¡La batalla terminó! Ganador: " + ganador.getApodo();
+            ganador = heroe.estaVivo() ? heroe : villano;
+            resultado += "La batalla terminó Ganador: " + ganador.getApodo();
         }
         
         turnoActual++;
         return resultado;
     }
     
-
     private String ejecutarAtaque(Personaje atacante, Personaje defensor, String nombreAtacante) {
-        int dano = calcularDano(atacante, defensor);
-        defensor.recibirDano(dano);
-        
-        String mensaje = "Turno " + turnoActual + ": " + nombreAtacante + " " + atacante.getApodo() 
-                + " ataca a " + defensor.getApodo() + " causando " + dano + " de daño.\n";
+        int daño = calcularDaño(atacante, defensor);
+        defensor.recibirDaño(daño);
+        String mensaje = "Turno " + turnoActual + ": " + nombreAtacante + " " + atacante.getApodo() + " ataca a " + defensor.getApodo() + " causando " + daño + " de daño\n";
         mensaje += "Vida restante de " + defensor.getApodo() + ": " + defensor.getVida();
-        
         return mensaje;
     }
     
-    private int calcularDano(Personaje atacante, Personaje defensor) {
-        int dañoBase = atacante.getFuerza() - defensor.getDefensa();
-        if (dañoBase < 1) {
-            dañoBase = 1;
+    private int calcularDaño(Personaje atacante, Personaje defensor) {
+        int dañoBase = Math.max(1, atacante.getFuerza() - defensor.getDefensa());
+        java.util.Random random = new java.util.Random();
+        double multiplicador = 0.9 + (random.nextDouble() * 0.2);
+        int dañoFinal = Math.max(1, (int) Math.round(dañoBase * multiplicador));
+        
+        if (random.nextDouble() < 0.15) {
+            dañoFinal = (int) Math.round(dañoFinal * 1.5);
         }
-        return dañoBase;
+        return dañoFinal;
     }
-
     public boolean estaTerminada() {
         return terminada || !heroe.estaVivo() || !villano.estaVivo();
     }
+    
     public Personaje obtenerGanador() {
         if (!estaTerminada()) {
             return null;
         }
-        if (heroe.estaVivo()) {
-            return heroe;
-        } else {
-            return villano;
-        }
+        return heroe.estaVivo() ? heroe : villano;
     }
     
     public String obtenerEstado() {
-        StringBuilder estado = new StringBuilder();
-        estado.append("Estado de la Batalla\n");
-        estado.append("Turno: ").append(turnoActual).append("\n");
-        estado.append("\nHeroe: ").append(heroe.getApodo()).append("\n");
-        estado.append("  Vida: ").append(heroe.getVida()).append("\n");
-        estado.append("  Fuerza: ").append(heroe.getFuerza()).append("\n");
-        estado.append("  Defensa: ").append(heroe.getDefensa()).append("\n");
-        estado.append("\nVillano: ").append(villano.getApodo()).append("\n");
-        estado.append("  Vida: ").append(villano.getVida()).append("\n");
-        estado.append("  Fuerza: ").append(villano.getFuerza()).append("\n");
-        estado.append("  Defensa: ").append(villano.getDefensa()).append("\n");
+        String estado = "";
+        estado += "Estado de la Batalla\n";
+        estado += "Turno: " + turnoActual + "\n";
+        estado += "\nHeroe: " + heroe.getApodo() + "\n";
+        estado += "  Vida: " + heroe.getVida() + "\n";
+        estado += "  Fuerza: " + heroe.getFuerza() + "\n";
+        estado += "  Defensa: " + heroe.getDefensa() + "\n";
+        estado += "\nVillano: " + villano.getApodo() + "\n";
+        estado += "  Vida: " + villano.getVida() + "\n";
+        estado += "  Fuerza: " + villano.getFuerza() + "\n";
+        estado += "  Defensa: " + villano.getDefensa() + "\n";
         
         if (estaTerminada()) {
-            estado.append("BATALLA TERMINADA\n");
-            estado.append("Ganador: ").append(obtenerGanador().getApodo());
+            estado += "BATALLA TERMINADA\n";
+            estado += "Ganador: " + obtenerGanador().getApodo();
         } else {
-            estado.append("Batalla en curso...");
+            estado += "Batalla en curso...";
         }
         
-        return estado.toString();
+        return estado;
     }
     
     public Heroe getHeroe() {
