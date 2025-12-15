@@ -30,7 +30,7 @@ public class controladorBatalla {
     }
     public String siguienteTurno() {
         if (batalla.estaTerminada()) {
-            return "La batalla ya terminó. Ganador: " + batalla.obtenerGanador().getApodo();
+            return "La batalla ya termino. Ganador: " + batalla.obtenerGanador().getApodo();
         }
         return batalla.ejecutarTurno();
     }

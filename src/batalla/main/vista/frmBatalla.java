@@ -43,7 +43,7 @@ public class frmBatalla extends javax.swing.JFrame {
     lblVidaHeroe.setText("Vida: " + heroe.getVida());
     lblFuerzaHeroe.setText("Fuerza: " + heroe.getFuerza());
     lblDefensaHeroe.setText("Defensa: " + heroe.getDefensa());
-    lblBendicionHeroe.setText("Bendición: " + heroe.getBendicion());    
+    lblBendicionHeroe.setText("Bendicion: " + heroe.getBendicion());    
     pbVidaHeroe.setMinimum(0);
     pbVidaHeroe.setMaximum(heroe.getVida());
     pbVidaHeroe.setValue(heroe.getVida());    
@@ -51,7 +51,7 @@ public class frmBatalla extends javax.swing.JFrame {
     lblVidaVillano.setText("Vida: " + villano.getVida());
     lblFuerzaVillano.setText("Fuerza: " + villano.getFuerza());
     lblDefensaVillano.setText("Defensa: " + villano.getDefensa());
-    lblBendicionVillano.setText("Bendición: " + villano.getBendicion());
+    lblBendicionVillano.setText("Bendicion: " + villano.getBendicion());
     
     pbVidaVillano.setMinimum(0);
     pbVidaVillano.setMaximum(villano.getVida());
@@ -109,10 +109,10 @@ public frmBatalla(Heroe heroe, Villano villano, int cantidadBatallas) {
     Villano villano = controladorBatalla.getVillano();
     
     lblVidaHeroe.setText("Vida: " + heroe.getVida());
-    lblBendicionHeroe.setText("Bendición: " + heroe.getBendicion());
+    lblBendicionHeroe.setText("Bendicion: " + heroe.getBendicion());
     pbVidaHeroe.setValue(heroe.getVida());
     lblVidaVillano.setText("Vida: " + villano.getVida());
-    lblBendicionVillano.setText("Bendición: " + villano.getBendicion());
+    lblBendicionVillano.setText("Bendicion: " + villano.getBendicion());
     pbVidaVillano.setValue(villano.getVida());
     actualizarInfoPartida();
 }
@@ -170,6 +170,7 @@ public frmBatalla(Heroe heroe, Villano villano) {
         btnHistorial = new javax.swing.JMenuItem();
         btnEstadisticas = new javax.swing.JMenuItem();
         btnComparador = new javax.swing.JMenuItem();
+        btnRanking = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -397,6 +398,10 @@ public frmBatalla(Heroe heroe, Villano villano) {
         btnComparador.addActionListener(this::btnComparadorActionPerformed);
         jMenuReportes.add(btnComparador);
 
+        btnRanking.setText("Ranking");
+        btnRanking.addActionListener(this::btnRankingActionPerformed);
+        jMenuReportes.add(btnRanking);
+
         jMenuBar1.add(jMenuReportes);
 
         setJMenuBar(jMenuBar1);
@@ -472,7 +477,7 @@ public frmBatalla(Heroe heroe, Villano villano) {
     if (batallaActual >= cantidadBatallas) {
         JOptionPane.showMessageDialog(
             this,
-            "¡Todas las batallas han finalizado!",
+            "!Todas las batallas han finalizado!",
             "Fin del Juego",
             JOptionPane.INFORMATION_MESSAGE
         );
@@ -522,10 +527,17 @@ public frmBatalla(Heroe heroe, Villano villano) {
         ventana.setVisible(true);
     }
 
+    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {
+        batalla.main.vista.reportes.frmRanking ventana = new batalla.main.vista.reportes.frmRanking();
+        ventana.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }
+
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         int opcion = JOptionPane.showConfirmDialog(
             this,
-            "¿Estás seguro que querés salir?",
+            "?Estas seguro que queres salir?",
             "Confirmar salida",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
@@ -605,7 +617,7 @@ public frmBatalla(Heroe heroe, Villano villano) {
         JOptionPane.showMessageDialog(
             this,
             "Partida guardada exitosamente",
-            "Éxito",
+            "Exito",
             JOptionPane.INFORMATION_MESSAGE
         );
     } catch (SQLException e) {
@@ -630,6 +642,7 @@ public frmBatalla(Heroe heroe, Villano villano) {
     private javax.swing.JMenuItem btnEstadisticas;
     private javax.swing.JMenuItem btnGuardarPartida;
     private javax.swing.JMenuItem btnHistorial;
+    private javax.swing.JMenuItem btnRanking;
     private javax.swing.JMenuItem btnSalir;
     private javax.swing.JButton btnSiguienteBatalla;
     private javax.swing.JButton btnSiguienteTurno;

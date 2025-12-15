@@ -33,10 +33,10 @@ public abstract class Personaje {
     
     public String validarApodo(String apodo) {
         if (apodo == null || apodo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El apodo no puede estar vacío");
+            throw new IllegalArgumentException("El apodo no puede estar vacio");
         }
         apodo = apodo.trim();
-        if (!apodo.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+        if (!apodo.matches("[a-zA-Z ]+")) {
             throw new IllegalArgumentException("El apodo tiene contener letras y espacios unicamente");
         }
         if (apodo.length() < 3 || apodo.length() > 10) {

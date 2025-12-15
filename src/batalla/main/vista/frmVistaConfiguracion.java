@@ -100,7 +100,7 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
 
         txtApodo.addActionListener(this::txtApodoActionPerformed);
 
-        cbTipoPersonaje.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Heroe ", "Villano", " " }));
+        cbTipoPersonaje.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Heroe", "Villano" }));
         cbTipoPersonaje.addActionListener(this::cbTipoPersonajeActionPerformed);
 
         btnAgregarPersonaje.setLabel("Agregar Personaje");
@@ -339,7 +339,7 @@ public class frmVistaConfiguracion extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(
             this,
             "Error: " + e.getMessage(),
-            "Error de validación",
+            "Error de validacion",
             JOptionPane.ERROR_MESSAGE
         );
     } catch (Exception e) {
@@ -366,7 +366,7 @@ private void actualizarListaPersonajes() {
     if (seleccionado == null) {
         JOptionPane.showMessageDialog(
             this,
-            "Seleccioná un personaje para poder eliminarlo",
+            "Selecciona un personaje para poder eliminarlo",
             "Aviso",
             JOptionPane.WARNING_MESSAGE
         );
@@ -375,8 +375,8 @@ private void actualizarListaPersonajes() {
     
     int opcion = JOptionPane.showConfirmDialog(
         this,
-        "¿Estas Seguro que queres eliminar este personaje?",
-        "Confirmar eliminación",
+        "?Estas Seguro que queres eliminar este personaje?",
+        "Confirmar eliminacion",
         JOptionPane.YES_NO_OPTION
     );
     if (opcion == JOptionPane.YES_OPTION) {
@@ -405,7 +405,7 @@ private void actualizarListaPersonajes() {
         if (!controlador.personajesCompletos()) {
             JOptionPane.showMessageDialog(
                 this,
-                "Debés crear un Heroe y un Villano antes de iniciar la batalla.",
+                "Debes crear un Heroe y un Villano antes de iniciar la batalla.",
                 "Aviso",
                 JOptionPane.WARNING_MESSAGE
             );
@@ -448,7 +448,7 @@ private void actualizarListaPersonajes() {
             JOptionPane.showMessageDialog(
                 this,
                 "No hay partidas guardadas en la base de datos.",
-                "Información",
+                "Informacion",
                 JOptionPane.INFORMATION_MESSAGE
             );
             return;
@@ -467,7 +467,7 @@ private void actualizarListaPersonajes() {
         actualizarListaPersonajes();
         int opcion = JOptionPane.showConfirmDialog(
             this,
-            "Partida cargada exitosamente.\n¿Querés continuar la batalla?",
+            "Partida cargada exitosamente.\n?Queres continuar la batalla?",
             "Partida Cargada",
             JOptionPane.YES_NO_OPTION
         );
@@ -504,7 +504,7 @@ private void actualizarListaPersonajes() {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
     int opcion = JOptionPane.showConfirmDialog(
         this,
-        "¿Estas seguro que queres salir?",
+        "?Estas seguro que queres salir?",
         "Confirmar salida",
         JOptionPane.YES_NO_OPTION,
         JOptionPane.QUESTION_MESSAGE

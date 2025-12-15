@@ -14,24 +14,26 @@ public class controladorConfiguracion {
     }
 
     public void agregarPersonaje(String apodo, String tipo, int vida, int fuerza, int defensa, int bendicion) {
-        if (tipo.equalsIgnoreCase("Heroe")) {
+        String tipoLimpio = tipo.trim();
+        if (tipoLimpio.equalsIgnoreCase("Heroe")) {
             heroe = new Heroe();
             heroe.crearPersonaje(apodo, vida, defensa, fuerza, bendicion);
             System.out.println("Heroe creado: " + heroe.getApodo());
-        } else if (tipo.equalsIgnoreCase("Villano")) {
+        } else if (tipoLimpio.equalsIgnoreCase("Villano")) {
             villano = new Villano();
             villano.crearPersonaje(apodo, vida, defensa, fuerza, bendicion);
             System.out.println("Villano creado: " + villano.getApodo());
         } else {
-            throw new IllegalArgumentException("Tipo de personaje inválido: " + tipo + ". Debe ser 'Heroe' o 'Villano'.");
+            throw new IllegalArgumentException("Tipo de personaje invalido: " + tipo + ". Debe ser 'Heroe' o 'Villano'.");
         }
     }
     
     public void eliminarPersonaje(String tipo) {
-        if (tipo.equalsIgnoreCase("Heroe")) {
+        String tipoLimpio = tipo.trim();
+        if (tipoLimpio.equalsIgnoreCase("Heroe")) {
             heroe = null;
             System.out.println("Heroe eliminado");
-        } else if (tipo.equalsIgnoreCase("Villano")) {
+        } else if (tipoLimpio.equalsIgnoreCase("Villano")) {
             villano = null;
             System.out.println("Villano eliminado");
         }

@@ -23,7 +23,7 @@ public class Batalla {
     
     public String ejecutarTurno() {
         if (terminada) {
-            return "La batalla ya terminó, Ganador: " + ganador.getApodo();
+            return "La batalla ya termino, Ganador: " + ganador.getApodo();
         }
         
         String resultado = (turnoActual % 2 == 1) 
@@ -33,7 +33,7 @@ public class Batalla {
         if (!heroe.estaVivo() || !villano.estaVivo()) {
             terminada = true;
             ganador = heroe.estaVivo() ? heroe : villano;
-            resultado += "La batalla terminó Ganador: " + ganador.getApodo();
+            resultado += "La batalla termino Ganador: " + ganador.getApodo();
         }
         
         turnoActual++;
